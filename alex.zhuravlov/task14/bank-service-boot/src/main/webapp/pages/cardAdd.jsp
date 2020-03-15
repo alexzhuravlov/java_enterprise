@@ -9,8 +9,9 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>
+<div class="container mt-3">
 <form:form modelAttribute="bankCard" action="addCard" method="post">
-    <table>
+   <table class="table table-stripped" style="width:600px">
         <tr>
             <td>
                 <form:label path="accounts"/>Account:
@@ -20,8 +21,9 @@
             </td>
         </tr>
     </table>
-    <input type="submit" value="Save"/>
+    <input type="submit" class="btn btn-primary" value="Add card"/>
 </form:form>
+</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>

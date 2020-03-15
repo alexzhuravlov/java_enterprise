@@ -9,8 +9,10 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>
+
+<div class="container mt-3">
 <form:form modelAttribute="withdraw" action="withdrawAccount" method="post">
-   <table>
+   <table class="table table-stripped" style="width:600px">
        <tr>
             <td>
                 <form:hidden path="accountId"/>
@@ -25,8 +27,9 @@
            </td>
        </tr>
    </table>
-   <input type="submit" value="Save"/>
+   <input type="submit" class="btn btn-primary" value="Withdraw"/>
 </form:form>
+</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
 </body>

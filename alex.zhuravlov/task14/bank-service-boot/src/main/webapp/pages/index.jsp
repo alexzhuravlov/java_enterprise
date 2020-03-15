@@ -8,7 +8,11 @@
    </head>
    <body>
    <jsp:include page="navbar.jsp"/>
-        <p><h5>Welcome, ${pageContext.request.userPrincipal.name}</h5>
+   <div class="mx-3 my-3">
+        <div class="alert alert-success" role="alert">
+          Welcome, ${pageContext.request.userPrincipal.name}
+        </div>
+   </div>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
             <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
    </body>

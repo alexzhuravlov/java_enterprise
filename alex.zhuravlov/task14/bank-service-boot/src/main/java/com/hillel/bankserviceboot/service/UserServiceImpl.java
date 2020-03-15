@@ -63,9 +63,9 @@ public class UserServiceImpl implements UserService {
         Map<String, String> rolesMap = new HashMap<>();
 
         for (RoleEntity role : roles) {
+            String roleId = String.valueOf(role.getId());
             String name = role.getName();
-            String text = "Role name:" + name;
-            rolesMap.put(name, text);
+            rolesMap.put(roleId, name);
         }
         return rolesMap;
     }
