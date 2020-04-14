@@ -5,46 +5,55 @@ import java.util.*;
 
 @Log
 public class MessagesQueue {
+
+    Deque<Message> messages = new ArrayDeque<>();
+    File dir = new File(new File("messages").getAbsolutePath());
+
+    String sender;
+    String receiver;
+    String name = "";
+    String text = "";
+    Date date = new Date();
+    String attachmentName;
+    Map<String, byte[]> attachments = new HashMap<>();
+    byte[] attachment;
+
     public Deque loadMessages() {
-        Deque<Message> messages = new ArrayDeque<>();
-        File dir = new File(new File("messages").getAbsolutePath());
-
-        String sender;
-        String reciever;
-        String name = "";
-        String text = "";
-        Date date = new Date();
-        String attachmentName;
-        Map<String, byte[]> attachments = new HashMap<>();
-        byte[] attachment;
-
         if (dir.isDirectory()) {
-            for (File senderDir : dir.listFiles()) {
-
-                if (senderDir.isDirectory()) {
-                    sender = senderDir.getName();
-                    for (File receiverDir : senderDir.listFiles()) {
-                        if (receiverDir.isDirectory()) {
-                            reciever = receiverDir.getName();
-                            attachments = new HashMap<>();
-                            for (File receiverMess : receiverDir.listFiles()) {
-                                if (receiverMess.isFile()) {
-                                    if (extension(receiverMess).equals("txt")) {
-                                        name = receiverMess.getName();
-                                        text = readMessageText(receiverMess);
-                                        date = new Date(receiverMess.lastModified());
-                                    } else {
-                                        attachmentName = receiverMess.getName();
-                                        attachment = readMessageAttachment(receiverMess);
-                                        attachments.put(attachmentName, attachment);
+            File[] files = dir.listFiles();
+            if (files != null) {
+                for (File senderDir : files) {
+                    if (senderDir.isDirectory()) {
+                        sender = senderDir.getName();
+                        File[] receiverDirFiles = senderDir.listFiles();
+                        if (receiverDirFiles != null) {
+                            for (File receiverDir : receiverDirFiles) {
+                                if (receiverDir.isDirectory()) {
+                                    receiver = receiverDir.getName();
+                                    attachments = new HashMap<>();
+                                    File[] receiverMessFiles = receiverDir.listFiles();
+                                    if (receiverMessFiles != null) {
+                                        for (File receiverMess : receiverMessFiles) {
+                                            if (receiverMess.isFile()) {
+                                                if (extension(receiverMess).equals("txt")) {
+                                                    name = receiverMess.getName();
+                                                    text = readMessageText(receiverMess);
+                                                    date = new Date(receiverMess.lastModified());
+                                                } else {
+                                                    attachmentName = receiverMess.getName();
+                                                    attachment = readMessageAttachment(receiverMess);
+                                                    attachments.put(attachmentName, attachment);
+                                                }
+                                            }
+                                        }
                                     }
+                                    messages.offer(new Message(date, sender, receiver, name, text, attachments));
                                 }
                             }
-                            messages.offer(new Message(date, sender, reciever, name, text, attachments));
                         }
+
+
                     }
-
-
                 }
             }
         }
